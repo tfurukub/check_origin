@@ -10,14 +10,25 @@ for filename in file_list:
         if line.find('Configured Serial Number') != -1:
             ## charssis serial ##
             content = line
-            pattern = '.+Configured\s+Serial\s+Number(.+)\s+(\S{12})'
+            pattern = '.+Configured\s+Serial\s+Number.+\s+(\S{12})'
             result = re.match(pattern,content)
-            c_s = result.group(2)
-            print(c_s)
-        if line.find('Node Position') != -1:
-            ## node position ##
-            n_p = line
-        if line.find('Serial Number') != -1:
-            ## node serial ##
-            n_s = line
+            c_s = result.group(1)
 
+            ## Move to Node Position ##
+            while(line.find('Node Position') == -1):
+                line = f.readline()
+            ## node position ##
+            content = line
+            pattern = '.+Node\s+Position\s+.+\s+(\w)'
+            result = re.match(pattern,content)
+            n_p = result.group(1)
+            
+            ## Move to Node Serial ##
+            while(line.find('Serial number') == -1):
+                line = f.readline()
+            ## node serial ##
+            content = line
+            pattern = '.+Serial\s+number\s+.+\s+(\S{12})'
+            result = re.match(pattern,content)
+            n_s = result.group(1)
+            print(n_s,",",c_s,",",n_p)
