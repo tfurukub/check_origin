@@ -31,4 +31,9 @@ for filename in file_list:
             pattern = '.+Serial\s+number\s+.+\s+(\S{12})'
             result = re.match(pattern,content)
             n_s = result.group(1)
-            print(n_s,",",c_s,",",n_p)
+            if c_s not in s_info:
+                s_info[c_s] = {}
+            s_info[c_s][n_p] = n_s
+
+for key in s_info:
+    print(s_info[key])
