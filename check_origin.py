@@ -1,5 +1,6 @@
 import glob
 import re
+import pandas as pd
 
 file_list = glob.glob(r"C:\Users\Takeo Furukubo\PycharmProjects\check_origin\nuta_cons_info\*")
 s_info = {}
@@ -34,6 +35,14 @@ for filename in file_list:
             if c_s not in s_info:
                 s_info[c_s] = {}
             s_info[c_s][n_p] = n_s
-
+'''
 for key in s_info:
-    print(s_info[key])
+    print(key,s_info[key])
+'''
+df = pd.read_csv("all.csv")
+chassis = df['chassis']
+for index,row in df.iterrows():
+    if row['chassis'] in s_info:
+        print(row['host'],row['node'],row['chassis'],row['position'])
+    else:
+        print(row['host'], row['node'], "replaced", row['position'])
