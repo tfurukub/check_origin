@@ -1,7 +1,7 @@
 import glob
 import re
 
-file_list = glob.glob("/home/furukubo/source/check_origin/hard/*")
+file_list = glob.glob(r"C:\Users\Takeo Furukubo\PycharmProjects\check_origin\nuta_cons_info\*")
 s_info = {}
 for filename in file_list:
     f = open(filename,'r')
