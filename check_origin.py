@@ -35,14 +35,29 @@ for filename in file_list:
             if c_s not in s_info:
                 s_info[c_s] = {}
             s_info[c_s][n_p] = n_s
-'''
+    f.close()
+
+f = open("SFDCdata.csv",'w')
 for key in s_info:
-    print(key,s_info[key])
-'''
+    for p in s_info[key]:
+        temp = key+","+s_info[key][p]+","+p+"\n"
+        f.write(temp)
+f.close()
+
+
 df = pd.read_csv("all.csv")
 chassis = df['chassis']
+f = open("original.csv",'w')
 for index,row in df.iterrows():
     if row['chassis'] in s_info:
-        print(row['host'],row['node'],row['chassis'],row['position'])
+        if row['position'] == "A":
+            temp = row['host']+","+s_info[row['chassis']]["A"]+","+row['chassis']+","+"A"+"\n"
+        else:
+            temp = row['host']+","+s_info[row['chassis']]["D"]+","+row['chassis']+","+"D"+"\n"
     else:
-        print(row['host'], row['node'], "replaced", row['position'])
+        if row['position'] == "A":
+            temp = row['host']+","+"N/A"+","+"replaced"+","+"A"+"\n"
+        else:
+            temp = row['host'] + "," + "N/A" + "," + "replaced" + "," + "D" + "\n"
+    f.write(temp)
+f.close()
